@@ -1,9 +1,14 @@
 plugins {
     application
+    id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
 repositories {
     mavenCentral()
+    maven {
+        name = "JitPack"
+        url = uri("https://jitpack.io/")
+    }
 }
 
 dependencies {
@@ -14,7 +19,18 @@ dependencies {
     implementation(libs.guava)
     implementation(libs.gson)
     implementation(libs.sqlite.jdbc)
-    implementation(libs.lombok)
+    implementation(libs.shared.java)
+    implementation(libs.log4j.api)
+    implementation(libs.log4j.core)
+    implementation(libs.atlantafx.base)
+    implementation(libs.appdirs)
+
+    compileOnly(libs.jetbrains.annotations)
+
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
+    testCompileOnly(libs.lombok)
+    testAnnotationProcessor(libs.lombok)
 }
 
 java {
@@ -25,6 +41,11 @@ java {
 
 application {
     mainClass = "io.github.mjaroslav.taskkeeper.TaskKeeper"
+}
+
+javafx {
+    version = "21.0.2"
+    modules("javafx.controls", "javafx.fxml")
 }
 
 tasks.named<Test>("test") {

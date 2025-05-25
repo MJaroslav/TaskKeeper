@@ -4,6 +4,12 @@ junit-jupiter = "5.12.1"
 gson = "2.13.1"
 sqlite-jdbc = "3.49.1.0"
 lombok = "1.18.38"
+jetbrains-annotations = "26.0.2"
+shared-java = "v1.0.2"
+log4j-api = "2.24.3"
+log4j-core = "2.24.3"
+atlantafx-base = "2.0.1"
+appdirs = "1.4.0"
 
 [libraries]
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
@@ -11,3 +17,9 @@ junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "jun
 gson = { module = "com.google.code.gson:gson", version.ref = "gson"}
 sqlite-jdbc = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite-jdbc" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrains-annotations" }
+shared-java = { module = "com.github.MJaroslav:Shared-Java", version.ref = "shared-java" }
+log4j-api = { module = "org.apache.logging.log4j:log4j-api", version.ref = "log4j-api" }
+log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j-core" }
+atlantafx-base = { module = "io.github.mkpaz:atlantafx-base", version.ref = "atlantafx-base" }
+appdirs = { module = "net.harawata:appdirs", version.ref = "appdirs" }
