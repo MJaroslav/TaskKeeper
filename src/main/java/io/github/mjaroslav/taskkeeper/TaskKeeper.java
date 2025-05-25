@@ -5,6 +5,8 @@ import io.github.mjaroslav.taskkeeper.ui.Activity;
 import io.github.mjaroslav.taskkeeper.ui.Dialog;
 import io.github.mjaroslav.taskkeeper.ui.LayoutManager;
 import io.github.mjaroslav.taskkeeper.ui.controller.activity.ActivityController;
+import io.github.mjaroslav.taskkeeper.ui.controller.dialog.DialogController;
+import io.github.mjaroslav.taskkeeper.util.Configuration;
 import io.github.mjaroslav.taskkeeper.util.ResourceManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -23,8 +25,11 @@ public class TaskKeeper extends Application {
     private static TaskKeeper instance;
 
     private Stage primaryStage;
+
     private ResourceManager resources;
     private LayoutManager layouts;
+    private Configuration configuration;
+
     private Activity currentActivity = Activity.NONE;
 
     @Override
@@ -33,7 +38,12 @@ public class TaskKeeper extends Application {
         instance = this;
         this.primaryStage = primaryStage;
         resources = new ResourceManager();
-        layouts = new LayoutManager(resources);
+        configuration = new Configuration(resources);
+        layouts = new LayoutManager(resources, configuration);
+
+        configuration.init();
+        configuration.read();
+        configuration.save();
 
         layouts.cacheActivities();
 
@@ -48,9 +58,8 @@ public class TaskKeeper extends Application {
 
         dialog(Dialog.PROFILE, true);
 
-        switchActivity(Activity.MAIN);
-
-        primaryStage.show();
+        if (currentActivity != Activity.NONE)
+            primaryStage.show();
     }
 
     public void switchActivity(@NotNull Activity activity) {
@@ -79,6 +88,8 @@ public class TaskKeeper extends Application {
     public void dialog(@NotNull Dialog dialog, boolean blockAndWait) {
         val stage = new Stage();
         val layoutController = layouts.get(dialog);
+        if (layoutController.controller() instanceof DialogController dialogController)
+            dialogController.setStage(stage);
         val root = layoutController.root();
         stage.setScene(new Scene(root));
         stage.setResizable(false);

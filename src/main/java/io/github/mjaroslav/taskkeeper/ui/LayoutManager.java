@@ -1,6 +1,7 @@
 package io.github.mjaroslav.taskkeeper.ui;
 
 import io.github.mjaroslav.taskkeeper.lib.Reference;
+import io.github.mjaroslav.taskkeeper.util.Configuration;
 import io.github.mjaroslav.taskkeeper.util.ResourceManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -20,6 +21,7 @@ public class LayoutManager {
     private final LayoutController NONE = new LayoutController(new AnchorPane(), null);
 
     private final @NotNull ResourceManager resources;
+    private final @NotNull Configuration configuration;
 
     private final Map<@NotNull LayoutType, Map<@NotNull LayoutIdentifier, @NotNull LayoutController>> cachedVC = new HashMap<>();
 
@@ -37,18 +39,19 @@ public class LayoutManager {
 
     public @NotNull LayoutController load(@NotNull LayoutIdentifier identifier) {
         val loader = new FXMLLoader();
-        loader.setResources(resources.bundle.get());
+        loader.setResources(configuration.bundle.get());
         try {
             val stream = resources.getStream(getLayoutPath(identifier.getType(), identifier.getLayout()));
             Objects.requireNonNull(stream);
             return new LayoutController(loader.load(stream), loader.getController());
         } catch (Exception e) {
-            log.error("Can't load {} activity", identifier.name(), e);
+            log.error("Can't load {} {}", identifier.name(), identifier.getType().name(), e);
             return NONE;
         }
     }
 
     public void cacheActivities() {
         Arrays.stream(Activity.values()).filter(Activity::isCacheable).forEach(this::get);
+        Arrays.stream(Dialog.values()).filter(Dialog::isCacheable).forEach(this::get);
     }
 }

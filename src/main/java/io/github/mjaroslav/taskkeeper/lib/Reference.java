@@ -4,6 +4,8 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class Reference {
+    public String NAME = "TaskKeeper";
+
     public String PACKAGE = "io.github.mjaroslav.taskkeeper";
 
     public String LAYOUT_ROOT = "/assets/layout/";

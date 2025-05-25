@@ -1,6 +1,7 @@
 plugins {
     application
     id("org.openjfx.javafxplugin") version "0.1.0"
+    idea
 }
 
 repositories {
@@ -24,6 +25,8 @@ dependencies {
     implementation(libs.log4j.core)
     implementation(libs.atlantafx.base)
     implementation(libs.appdirs)
+    implementation(libs.sqlite.java)
+    implementation(libs.fx.gson)
 
     compileOnly(libs.jetbrains.annotations)
 
@@ -31,6 +34,13 @@ dependencies {
     annotationProcessor(libs.lombok)
     testCompileOnly(libs.lombok)
     testAnnotationProcessor(libs.lombok)
+}
+
+idea {
+    module {
+        isDownloadJavadoc = true
+        isDownloadSources = true
+    }
 }
 
 java {
@@ -46,6 +56,7 @@ application {
 javafx {
     version = "21.0.2"
     modules("javafx.controls", "javafx.fxml")
+    configuration = "implementation"
 }
 
 tasks.named<Test>("test") {

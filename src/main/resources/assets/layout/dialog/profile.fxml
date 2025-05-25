@@ -5,17 +5,62 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" spacing="10.0" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.mjaroslav.taskkeeper.ui.controller.dialog.ProfileController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" spacing="10.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.mjaroslav.taskkeeper.ui.controller.dialog.ProfileController">
    <children>
-      <Label maxHeight="-Infinity" maxWidth="1.7976931348623157E308" text="%dialog.profile.title" />
+      <Label maxHeight="-Infinity" maxWidth="1.7976931348623157E308" text="%dialog.profile.title">
+         <VBox.margin>
+            <Insets bottom="-10.0" />
+         </VBox.margin></Label>
+      <Separator prefWidth="200.0">
+         <VBox.margin>
+            <Insets top="-10.0" />
+         </VBox.margin>
+      </Separator>
       <Label maxWidth="1.7976931348623157E308" text="%dialog.profile.select" />
-      <ChoiceBox fx:id="choiceProfile" maxWidth="1.7976931348623157E308" />
-      <CheckBox maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%dialog.profile.auto" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%dialog.profile.run" />
+      <GridPane hgap="10.0" maxWidth="1.7976931348623157E308">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" percentWidth="70.0" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ChoiceBox fx:id="choiceProfile" maxWidth="1.7976931348623157E308" />
+            <GridPane GridPane.columnIndex="1">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="buttonAdd" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="+" />
+                  <Button fx:id="buttonRemove" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="-" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+      <CheckBox fx:id="checkAutoRun" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%dialog.profile.auto" />
+      <Button fx:id="buttonRun" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onButtonRunClick" text="%dialog.profile.run" />
       <Label maxWidth="1.7976931348623157E308" text="%dialog.profile.lang" />
       <ChoiceBox fx:id="choiceLang" maxWidth="1.7976931348623157E308" />
+      <Label fx:id="labelRestart" maxWidth="1.7976931348623157E308" text="%dialog.profile.reload" textFill="RED" visible="false">
+         <font>
+            <Font size="10.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="-10.0" />
+         </VBox.margin>
+      </Label>
    </children>
    <padding>
       <Insets left="30.0" right="30.0" />
