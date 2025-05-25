@@ -1,4 +1,4 @@
-package io.github.mjaroslav.taskkeeper.util;
+package io.github.mjaroslav.taskkeeper.configuration;
 
 import io.github.mjaroslav.sharedjava.function.LazySupplier;
 import lombok.Getter;

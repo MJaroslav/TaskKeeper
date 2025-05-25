@@ -1,7 +1,7 @@
 package io.github.mjaroslav.taskkeeper.ui;
 
 import io.github.mjaroslav.taskkeeper.lib.Reference;
-import io.github.mjaroslav.taskkeeper.util.Configuration;
+import io.github.mjaroslav.taskkeeper.configuration.Configuration;
 import io.github.mjaroslav.taskkeeper.util.ResourceManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;

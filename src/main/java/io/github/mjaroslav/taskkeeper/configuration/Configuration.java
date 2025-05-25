@@ -1,6 +1,7 @@
-package io.github.mjaroslav.taskkeeper.util;
+package io.github.mjaroslav.taskkeeper.configuration;
 
 import io.github.mjaroslav.sharedjava.function.LazySupplier;
+import io.github.mjaroslav.taskkeeper.util.ResourceManager;
 import javafx.beans.value.ChangeListener;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;

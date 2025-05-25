@@ -1,8 +1,8 @@
 package io.github.mjaroslav.taskkeeper.ui.controller.dialog;
 
 import io.github.mjaroslav.taskkeeper.TaskKeeper;
+import io.github.mjaroslav.taskkeeper.configuration.Localization;
 import io.github.mjaroslav.taskkeeper.ui.Activity;
-import io.github.mjaroslav.taskkeeper.util.Localization;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,7 +50,7 @@ public class ProfileController implements DialogController {
         checkAutoRun.setSelected(configuration.isAutoRun());
         configuration.autoRunProperty().bind(checkAutoRun.selectedProperty());
 
-        choiceProfile.setItems(configuration.getProfiles());
+        choiceProfile.setItems(FXCollections.observableList(app.getProfiles().findProfileNames()));
         choiceProfile.setValue(configuration.getProfile());
         configuration.profileProperty().bind(choiceProfile.valueProperty());
     }

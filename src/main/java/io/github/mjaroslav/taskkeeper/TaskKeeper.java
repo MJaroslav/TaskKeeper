@@ -1,12 +1,14 @@
 package io.github.mjaroslav.taskkeeper;
 
 import atlantafx.base.theme.PrimerDark;
+import io.github.mjaroslav.taskkeeper.configuration.Configuration;
+import io.github.mjaroslav.taskkeeper.profile.Profile;
+import io.github.mjaroslav.taskkeeper.profile.ProfileManager;
 import io.github.mjaroslav.taskkeeper.ui.Activity;
 import io.github.mjaroslav.taskkeeper.ui.Dialog;
 import io.github.mjaroslav.taskkeeper.ui.LayoutManager;
 import io.github.mjaroslav.taskkeeper.ui.controller.activity.ActivityController;
 import io.github.mjaroslav.taskkeeper.ui.controller.dialog.DialogController;
-import io.github.mjaroslav.taskkeeper.util.Configuration;
 import io.github.mjaroslav.taskkeeper.util.ResourceManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -29,8 +31,11 @@ public class TaskKeeper extends Application {
     private ResourceManager resources;
     private LayoutManager layouts;
     private Configuration configuration;
+    private ProfileManager profiles;
 
     private Activity currentActivity = Activity.NONE;
+
+    private Profile currentProfile;
 
     @Override
     public void start(@NotNull Stage primaryStage) {
@@ -40,6 +45,7 @@ public class TaskKeeper extends Application {
         resources = new ResourceManager();
         configuration = new Configuration(resources);
         layouts = new LayoutManager(resources, configuration);
+        profiles = new ProfileManager(resources, configuration);
 
         configuration.init();
         configuration.read();
@@ -58,8 +64,16 @@ public class TaskKeeper extends Application {
 
         dialog(Dialog.PROFILE, true);
 
-        if (currentActivity != Activity.NONE)
-            primaryStage.show();
+        if (currentActivity != Activity.NONE) {
+            if (profiles.findProfileNames().contains(configuration.getInstance().getProfile())) {
+                currentProfile = profiles.loadProfile(configuration.getInstance().getProfile());
+                primaryStage.show();
+                Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                    if (currentProfile != null)
+                        currentProfile.getInstance().close();
+                }));
+            }
+        }
     }
 
     public void switchActivity(@NotNull Activity activity) {

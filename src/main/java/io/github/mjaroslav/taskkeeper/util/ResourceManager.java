@@ -12,6 +12,8 @@ import java.io.InputStream;
 import java.nio.file.Path;
 
 public class ResourceManager {
+    public static final String EXT_DB = "db";
+
     public final Gson FX_GSON = FxGson.coreBuilder().setPrettyPrinting().create();
     private final AppDirs DIRS = AppDirsFactory.getInstance();
 
@@ -29,5 +31,9 @@ public class ResourceManager {
 
     public @NotNull Path getConfigDir() {
         return Path.of(DIRS.getUserConfigDir(Reference.NAME, null, null));
+    }
+
+    public @NotNull Path getProfileDir() {
+        return getConfigDir().resolve("profiles");
     }
 }
