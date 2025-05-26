@@ -18,9 +18,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lombok.Getter;
+import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.SQLException;
+
+@Log4j2
 @Getter
 public class TaskKeeper extends Application {
     @Getter
@@ -38,7 +42,7 @@ public class TaskKeeper extends Application {
     private Profile currentProfile;
 
     @Override
-    public void start(@NotNull Stage primaryStage) {
+    public void start(@NotNull Stage primaryStage) throws SQLException {
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
         instance = this;
         this.primaryStage = primaryStage;
@@ -67,10 +71,16 @@ public class TaskKeeper extends Application {
         if (currentActivity != Activity.NONE) {
             if (profiles.findProfileNames().contains(configuration.getInstance().getProfile())) {
                 currentProfile = profiles.loadProfile(configuration.getInstance().getProfile());
+                currentProfile.init();
                 primaryStage.show();
                 Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                    if (currentProfile != null)
-                        currentProfile.getInstance().close();
+                    if (currentProfile != null) {
+                        try {
+                            currentProfile.getInstance().close();
+                        } catch (Exception e) {
+                            log.fatal("Can't close database {}", currentProfile.getDBPath(), e);
+                        }
+                    }
                 }));
             }
         }

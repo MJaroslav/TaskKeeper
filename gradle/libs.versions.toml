@@ -10,8 +10,8 @@ log4j-api = "2.24.3"
 log4j-core = "2.24.3"
 atlantafx-base = "2.0.1"
 appdirs = "1.4.0"
-sqlite-java = "1.0.8"
 fx-gson = "5.0.0"
+ormlite-jdbc = "6.1"
 
 [libraries]
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
@@ -25,5 +25,5 @@ log4j-api = { module = "org.apache.logging.log4j:log4j-api", version.ref = "log4
 log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j-core" }
 atlantafx-base = { module = "io.github.mkpaz:atlantafx-base", version.ref = "atlantafx-base" }
 appdirs = { module = "net.harawata:appdirs", version.ref = "appdirs" }
-sqlite-java = { module = "com.github.artbits:sqlite-java", version.ref = "sqlite-java" }
 fx-gson = { module = "org.hildan.fxgson:fx-gson", version.ref = "fx-gson" }
+ormlite-jdbc = { module = "com.j256.ormlite:ormlite-jdbc", version.ref = "ormlite-jdbc" }

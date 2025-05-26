@@ -1,15 +1,24 @@
 package io.github.mjaroslav.taskkeeper.profile.pojo;
 
-import com.github.artbits.jsqlite.DataSupport;
+import com.j256.ormlite.dao.ForeignCollection;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.List;
-import java.util.function.Consumer;
+@DatabaseTable(tableName = "tasks")
+public class Task {
+    public static final String NAME = "name";
+    public static final String PROJECT_ID = "project_id";
 
-public class Task extends DataSupport<Task> {
+    @DatabaseField(generatedId = true)
+    private long id;
+
+    @DatabaseField(columnName = NAME)
     public String name;
-//    public List<Line> records;
 
-    public Task(Consumer<Task> consumer) {
-        super(consumer);
-    }
+    @DatabaseField(foreign = true, columnName = PROJECT_ID)
+    public Project project;
+
+    @ForeignCollectionField
+    public ForeignCollection<Line> lines;
 }

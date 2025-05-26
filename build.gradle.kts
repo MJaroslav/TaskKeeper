@@ -25,8 +25,8 @@ dependencies {
     implementation(libs.log4j.core)
     implementation(libs.atlantafx.base)
     implementation(libs.appdirs)
-    implementation(libs.sqlite.java)
     implementation(libs.fx.gson)
+    implementation(libs.ormlite.jdbc)
 
     compileOnly(libs.jetbrains.annotations)
 
