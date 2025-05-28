@@ -52,6 +52,7 @@ public class TaskKeeper extends Application {
         configuration = new Configuration(resources);
         layouts = new LayoutManager(resources, configuration);
         profiles = new ProfileManager(resources, configuration);
+        profiles.findProfiles();
 
         configuration.init();
         configuration.read();

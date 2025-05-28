@@ -34,7 +34,7 @@ public class ProfileManager {
         PathFiles
             .list(path.orElseThrow())
             .filter(it -> PathFiles.isExtension(it, ResourceManager.EXT_DB))
-            .map(it -> it.getFileName().toString())
+            .map(PathFiles::removeExtension)
             .map(it -> new Profile(it, resources))
             .forEach(profiles::add);
     }
