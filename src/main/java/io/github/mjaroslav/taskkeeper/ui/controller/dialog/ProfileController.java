@@ -3,6 +3,7 @@ package io.github.mjaroslav.taskkeeper.ui.controller.dialog;
 import io.github.mjaroslav.taskkeeper.TaskKeeper;
 import io.github.mjaroslav.taskkeeper.configuration.Localization;
 import io.github.mjaroslav.taskkeeper.ui.Activity;
+import io.github.mjaroslav.taskkeeper.ui.Dialog;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,14 +51,26 @@ public class ProfileController implements DialogController {
         checkAutoRun.setSelected(configuration.isAutoRun());
         configuration.autoRunProperty().bind(checkAutoRun.selectedProperty());
 
-        choiceProfile.setItems(FXCollections.observableList(app.getProfiles().findProfileNames()));
+        choiceProfile.setItems(FXCollections.observableList(app.getProfiles().getProfileNames()));
         choiceProfile.setValue(configuration.getProfile());
         configuration.profileProperty().bind(choiceProfile.valueProperty());
+        choiceProfile.valueProperty().addListener((observable, oldValue, newValue) ->
+            buttonRun.setDisable(!app.getProfiles().getProfileNames().contains(newValue)));
     }
 
     @FXML
     public void onButtonRunClick(@NotNull ActionEvent actionEvent) {
         TaskKeeper.getInstance().switchActivity(Activity.MAIN);
         getStage().close();
+    }
+
+    @FXML
+    public void onButtonAddClick(@NotNull ActionEvent actionEvent) {
+        TaskKeeper.getInstance().dialog(Dialog.NEW_PROFILE, true, this);
+    }
+
+    @FXML
+    public void onButtonRemoveClick() {
+
     }
 }

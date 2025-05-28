@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" spacing="10.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.mjaroslav.taskkeeper.ui.controller.dialog.ProfileController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" spacing="10.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.mjaroslav.taskkeeper.ui.controller.dialog.ProfileController">
    <children>
       <Label maxHeight="-Infinity" maxWidth="1.7976931348623157E308" text="%dialog.profile.title">
          <VBox.margin>
@@ -43,8 +43,8 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button fx:id="buttonAdd" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="+" />
-                  <Button fx:id="buttonRemove" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="-" GridPane.columnIndex="1" />
+                  <Button fx:id="buttonAdd" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onButtonAddClick" text="+" />
+                  <Button fx:id="buttonRemove" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onButtonRemoveClick" text="-" GridPane.columnIndex="1" />
                </children>
             </GridPane>
          </children>

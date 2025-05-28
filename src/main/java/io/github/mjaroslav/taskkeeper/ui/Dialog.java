@@ -8,7 +8,8 @@ import org.jetbrains.annotations.NotNull;
 @Getter
 public enum Dialog implements LayoutIdentifier {
     NONE("", UNDEFINED),
-    PROFILE("profile", NO_FLAGS);
+    PROFILE("profile", NO_FLAGS),
+    NEW_PROFILE("new_profile", CACHEABLE);
 
     private final LayoutType type = LayoutType.DIALOG;
     private final @NotNull String layout;

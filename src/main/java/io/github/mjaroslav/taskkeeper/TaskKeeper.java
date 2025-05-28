@@ -16,11 +16,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
 
@@ -66,22 +68,17 @@ public class TaskKeeper extends Application {
 
         primaryStage.setScene(scene);
 
-        dialog(Dialog.PROFILE, true);
+        dialog(Dialog.PROFILE, true, null);
 
         if (currentActivity != Activity.NONE) {
-            if (profiles.findProfileNames().contains(configuration.getInstance().getProfile())) {
-                currentProfile = profiles.loadProfile(configuration.getInstance().getProfile());
-                currentProfile.init();
+            if (profiles.getProfileNames().contains(configuration.getInstance().getProfile())) {
+                currentProfile = profiles.getProfiles()
+                    .stream()
+                    .filter(it -> it.getName().equals(configuration.getInstance().getProfile()))
+                    .findFirst().orElseThrow();
+                currentProfile.onLoad();
                 primaryStage.show();
-                Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                    if (currentProfile != null) {
-                        try {
-                            currentProfile.getInstance().close();
-                        } catch (Exception e) {
-                            log.fatal("Can't close database {}", currentProfile.getDBPath(), e);
-                        }
-                    }
-                }));
+                Runtime.getRuntime().addShutdownHook(new Thread(() -> profiles.getProfiles().forEach(Profile::onUnload)));
             }
         }
     }
@@ -109,7 +106,7 @@ public class TaskKeeper extends Application {
         return alert.showAndWait().orElse(ButtonType.YES) == ButtonType.YES;
     }
 
-    public void dialog(@NotNull Dialog dialog, boolean blockAndWait) {
+    public void dialog(@NotNull Dialog dialog, boolean blockAndWait, @Nullable Object owner) {
         val stage = new Stage();
         val layoutController = layouts.get(dialog);
         if (layoutController.controller() instanceof DialogController dialogController)
@@ -117,8 +114,11 @@ public class TaskKeeper extends Application {
         val root = layoutController.root();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
-        if (blockAndWait) stage.showAndWait();
-        else stage.show();
+        if (blockAndWait) {
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(owner instanceof DialogController controller ? controller.getStage() : primaryStage);
+            stage.showAndWait();
+        } else stage.show();
     }
 
     public static void main(@NotNull String @NotNull ... args) {
