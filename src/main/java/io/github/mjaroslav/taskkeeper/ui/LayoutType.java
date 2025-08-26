@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 @AllArgsConstructor
 public enum LayoutType {
+    UNKNOWN("NONE"),
     ACTIVITY("activity"),
     DIALOG("dialog");
 

@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" spacing="10.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.mjaroslav.taskkeeper.ui.controller.dialog.NewProfileController">
    <children>
       <Label text="%dialog.new_profile.name" />
@@ -23,8 +22,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="buttonDone" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%dialog.new_profile.done" />
-            <Button fx:id="buttonCancel" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%dialog.new_profile.cancel" GridPane.columnIndex="1" />
+            <Button fx:id="buttonDone" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickDone" text="%dialog.new_profile.done" />
+            <Button fx:id="buttonCancel" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickCancel" text="%dialog.new_profile.cancel" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </children>

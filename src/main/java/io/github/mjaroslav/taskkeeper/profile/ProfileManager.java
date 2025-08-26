@@ -31,6 +31,7 @@ public class ProfileManager {
     }
 
     public void findProfiles() {
+        profiles.clear();
         PathFiles
             .list(path.orElseThrow())
             .filter(it -> PathFiles.isExtension(it, ResourceManager.EXT_DB))

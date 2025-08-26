@@ -2,8 +2,8 @@ package io.github.mjaroslav.taskkeeper.ui.controller.dialog;
 
 import io.github.mjaroslav.taskkeeper.TaskKeeper;
 import io.github.mjaroslav.taskkeeper.configuration.Localization;
-import io.github.mjaroslav.taskkeeper.ui.Activity;
-import io.github.mjaroslav.taskkeeper.ui.Dialog;
+import io.github.mjaroslav.taskkeeper.ui.LayoutID;
+import io.github.mjaroslav.taskkeeper.ui.controller.Controller;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,17 +11,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
 
-public class ProfileController implements DialogController {
-    @Getter
-    @Setter
-    private @NotNull Stage stage;
-
+public class ProfileController extends Controller {
     @FXML
     public ChoiceBox<String> choiceProfile;
     @FXML
@@ -60,17 +53,19 @@ public class ProfileController implements DialogController {
 
     @FXML
     public void onButtonRunClick(@NotNull ActionEvent actionEvent) {
-        TaskKeeper.getInstance().switchActivity(Activity.MAIN);
+        switchTo(LayoutID.ACTIVITY_MAIN);
         getStage().close();
     }
 
     @FXML
     public void onButtonAddClick(@NotNull ActionEvent actionEvent) {
-        TaskKeeper.getInstance().dialog(Dialog.NEW_PROFILE, true, this);
+        dialog(LayoutID.DIALOG_NEW_PROFILE);
     }
 
     @FXML
     public void onButtonRemoveClick() {
+        if (confirm("dialog.profile.remove", choiceProfile.getValue())) {
 
+        }
     }
 }

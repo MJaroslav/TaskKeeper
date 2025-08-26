@@ -1,7 +1,7 @@
 package io.github.mjaroslav.taskkeeper.ui;
 
-import io.github.mjaroslav.taskkeeper.lib.Reference;
 import io.github.mjaroslav.taskkeeper.configuration.Configuration;
+import io.github.mjaroslav.taskkeeper.lib.Reference;
 import io.github.mjaroslav.taskkeeper.util.ResourceManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -18,18 +18,18 @@ import java.util.Objects;
 @AllArgsConstructor
 @Log4j2
 public class LayoutManager {
-    private final LayoutController NONE = new LayoutController(new AnchorPane(), null);
+    public final LayoutController NONE = new LayoutController(new AnchorPane(), null);
 
     private final @NotNull ResourceManager resources;
     private final @NotNull Configuration configuration;
 
-    private final Map<@NotNull LayoutType, Map<@NotNull LayoutIdentifier, @NotNull LayoutController>> cachedVC = new HashMap<>();
+    private final Map<@NotNull LayoutType, Map<@NotNull LayoutID, @NotNull LayoutController>> cachedVC = new HashMap<>();
 
     public @NotNull String getLayoutPath(@NotNull LayoutType type, @NotNull String name) {
         return String.format("%s/%s/%s.fxml", Reference.LAYOUT_ROOT, type.prefix, name);
     }
 
-    public @NotNull LayoutController get(@NotNull LayoutIdentifier identifier) {
+    public @NotNull LayoutController get(@NotNull LayoutID identifier) {
         return identifier.isCacheable()
             ? cachedVC.computeIfAbsent(identifier.getType(), k -> new HashMap<>()).computeIfAbsent(identifier,
             key -> load(identifier))
@@ -37,7 +37,7 @@ public class LayoutManager {
 
     }
 
-    public @NotNull LayoutController load(@NotNull LayoutIdentifier identifier) {
+    public @NotNull LayoutController load(@NotNull LayoutID identifier) {
         val loader = new FXMLLoader();
         loader.setResources(configuration.bundle.get());
         try {
@@ -51,7 +51,6 @@ public class LayoutManager {
     }
 
     public void cacheActivities() {
-        Arrays.stream(Activity.values()).filter(Activity::isCacheable).forEach(this::get);
-        Arrays.stream(Dialog.values()).filter(Dialog::isCacheable).forEach(this::get);
+        Arrays.stream(LayoutID.values()).filter(LayoutID::isCacheable).forEach(this::get);
     }
 }
